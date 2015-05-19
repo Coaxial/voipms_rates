@@ -20,6 +20,7 @@ module VoipmsRates
         let(:us_number) { '12125551234' }
         let(:french_number) { '33953123456' }
         let(:invalid_number) { '9' }
+        let(:sip_string) { 'sip:15145551234@127.0.0.1' }
 
         context 'when the premium rate is requested' do
 
@@ -71,6 +72,14 @@ module VoipmsRates
             it 'returns "nil"' do
               VCR.use_cassette('invalid_number') do
                 expect(subject.get_rate_for(invalid_number)).to eq(nil)
+              end
+            end
+          end
+
+          context 'with a sip string' do
+            it 'returns the rate' do
+              VCR.use_cassette('sip_string') do
+                expect(subject.get_rate_for(sip_string)).to eq(0.0052)
               end
             end
           end

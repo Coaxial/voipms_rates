@@ -5,16 +5,20 @@ module VoipmsRates
     require 'nokogiri'
 
     # Parameters:
-    # phone_number [Int] The number ofr which we want to get the rate
+    # phone_number [Int] The number for which we want to get the rate
     def get_rate_for(phone_number)
       if phone_number.match(/[^\d]+/)
-        raise TypeError, "expected digits only, received '#{phone_number}'", caller
+        @digits = phone_number.match(/(\d*)@.*/)[1]
+
+        raise TypeError, "Unexpected input, received '#{phone_number}'", caller unless @digits
+      else
+        @digits = phone_number
       end
 
-      return try_patterns(phone_number)
+      return try_patterns(@digits)
     end
 
-    def try_patterns(phone_number)
+    def try_patterns(digits)
       rates_endpoint = Adhearsion.config[:voipms_rates].rates_endpoint
       # The rates API only works with part of the phone number. If it gets the full phone number, it won't find the
       # rate. If it doesn't get enough digits, it won't find the rate either. And if it gets too many digits, it won't
@@ -24,9 +28,9 @@ module VoipmsRates
       # To get the rate for '15145551234' (Canada), you would need to send '1514'
       # To get the rate for '12125551234' (USA), you would need to send '1'
       #
-      high_count = phone_number.length >= 5 ? 5 : phone_number.length # This speeds things up with shorter numbers
+      high_count = digits.length >= 5 ? 5 : digits.length # This speeds things up with shorter numbers
       for i in high_count.downto(1) do
-        pattern = phone_number[0, i]
+        pattern = digits[0, i]
         api_response = RestClient.get(rates_endpoint, {
           params: {
             pattern: pattern 
