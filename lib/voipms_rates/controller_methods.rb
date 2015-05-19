@@ -4,16 +4,8 @@ module VoipmsRates
     require 'rest-client'
     require 'nokogiri'
 
-    # The methods are defined in a normal method the user will then mix in their CallControllers
-    # The following also contains an example of configuration usage
-    #
-    def greet(name)
-      play "#{Adhearsion.config[:voipms_rates].greeting}, #{name}"
-    end
-
     # Parameters:
     # phone_number [Int] The number ofr which we want to get the rate
-    # route_quality [String] Can be 'premium' or 'value'. Defaults to 'value'. The quality as set in voip.ms (Premium or Value)
     def get_rate_for(phone_number)
       if phone_number.match(/[^\d]+/)
         raise TypeError, "expected digits only, received '#{phone_number}'", caller
@@ -67,5 +59,7 @@ module VoipmsRates
         end
       end
     end 
+
+    private :try_patterns
   end
 end

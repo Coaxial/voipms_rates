@@ -10,6 +10,7 @@ Gem::Specification.new do |s|
   s.homepage    = ""
   s.summary     = "Get voip.ms calling rates for given phone numbers."
   s.description = "Uses the voip.ms public API to fetch premium or value rates per minute for any phone number."
+  s.license     = "MIT"
 
   s.rubyforge_project = "voipms_rates"
 
