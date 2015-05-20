@@ -7,12 +7,12 @@ module VoipmsRates
     # Parameters:
     # phone_number [Int] The number for which we want to get the rate
     def get_rate_for(phone_number)
-      if phone_number.match(/[^\d]+/)
-        @digits = phone_number.match(/(\d*)@.*/)[1]
-
-        raise TypeError, "Unexpected input, received '#{phone_number}'", caller unless @digits
+      if phone_number.match(/(\d*)@.*/)
+        @digits = phone_number.match(/(\d*)@.*/)[1] 
+      elsif phone_number.match(/[\d]+/)
+        @digits = phone_number.match(/(\d+)/)[1]
       else
-        @digits = phone_number
+        raise(TypeError, "Unexpected input, received '#{phone_number}'", caller)
       end
 
       return try_patterns(@digits)

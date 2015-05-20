@@ -19,8 +19,9 @@ module VoipmsRates
         let(:canadian_number) { '15145551234' }
         let(:us_number) { '12125551234' }
         let(:french_number) { '33953123456' }
-        let(:invalid_number) { '9' }
+        let(:unroutable_number) { '9' }
         let(:sip_string) { 'sip:15145551234@127.0.0.1' }
+        let(:invalid_string) { 'invalid number' }
 
         context 'when the premium rate is requested' do
 
@@ -50,10 +51,10 @@ module VoipmsRates
             end
           end
 
-          context 'with an invalid number' do
+          context 'with an unroutable number' do
             it 'returns "nil"' do
-              VCR.use_cassette('invalid_number') do
-                expect(subject.get_rate_for(invalid_number)).to eq(nil)
+              VCR.use_cassette('unroutable_number') do
+                expect(subject.get_rate_for(unroutable_number)).to eq(nil)
               end
             end
           end
@@ -68,10 +69,10 @@ module VoipmsRates
             end
           end
 
-          context 'with an invalid number' do
+          context 'with an unroutable number' do
             it 'returns "nil"' do
-              VCR.use_cassette('invalid_number') do
-                expect(subject.get_rate_for(invalid_number)).to eq(nil)
+              VCR.use_cassette('unroutable_number') do
+                expect(subject.get_rate_for(unroutable_number)).to eq(nil)
               end
             end
           end
@@ -81,6 +82,14 @@ module VoipmsRates
               VCR.use_cassette('sip_string') do
                 expect(subject.get_rate_for(sip_string)).to eq(0.0052)
               end
+            end
+          end
+        end
+
+        context 'with an invalid string' do
+          it 'returns a TypeError' do
+            VCR.use_cassette('invalid_string') do
+              expect{subject.get_rate_for(invalid_string)}.to raise_error(TypeError)
             end
           end
         end
