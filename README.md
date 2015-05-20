@@ -4,6 +4,9 @@ VoipmsRates
 This [Adhearsion](adhearsion.com) plugin fetches the per minute rate from voip.ms for any phone number. It uses the
 public [voip.ms API](https://voip.ms/rates/xml.php).
 
+> Note that this is intended to be used within an Adhearsion app. If you require this gem to use anywhere else than an
+> Adhearsion app, it will probably not work out of the box.
+
 # Installation
 Add `gem 'voipms_rates'` to your Gemfile and run `bundle install`.
 
