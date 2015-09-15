@@ -7,9 +7,9 @@ Gem::Specification.new do |s|
   s.version     = VoipmsRates::VERSION
   s.authors     = ["Coaxial"]
   s.email       = ["py@poujade.org"]
-  s.homepage    = ""
-  s.summary     = "Get voip.ms calling rates for given phone numbers."
-  s.description = "Uses the voip.ms public API to fetch premium or value rates per minute for any phone number."
+  s.homepage    = "https://github.com/Coaxial/voipms_rates"
+  s.summary     = "voip.ms calling rates within your Adhearsion app."
+  s.description = "An Adhearsion plugin using the voip.ms public API to fetch premium or value rates per minute for any phone number."
   s.license     = "MIT"
 
   s.rubyforge_project = "voipms_rates"
